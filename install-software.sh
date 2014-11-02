@@ -32,7 +32,7 @@ cd htslib
 make && make install
 
 # remove packages that are no more necessary
-# (remaining ones: llvm gcc git zlib libconfig)
-yum -y remove llvm-static llvm-devel llvm gcc-c++ patch libconfig-devel zlib-devel wget
+# (remaining ones: llvm gcc git zlib libconfig zlib-devel)
+yum -y remove llvm-static llvm-devel llvm gcc-c++ patch libconfig-devel wget
 yum clean all
 rm -rf /tmp/*
