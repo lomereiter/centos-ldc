@@ -5,7 +5,7 @@ yum -y install llvm git wget gcc gcc-c++ patch llvm-devel llvm-static libconfig 
 
 # clone LDC repo
 cd /tmp
-git clone --recursive https://github.com/ldc-developers/ldc.git -b release-0.14.0
+git clone --recursive https://github.com/ldc-developers/ldc.git -b release-0.16.1
 
 # patch D runtime so as not to depend on newer glibc
 cd /tmp/ldc/runtime/druntime
@@ -16,20 +16,14 @@ patch -p1 < d-runtime-qsort.patch
 cd /tmp/ldc
 mkdir build
 cd build
-cmake28 .. 
+cmake28 ..
 make && make install
 
 # build and install rdmd
 cd /tmp
 wget -q https://raw.githubusercontent.com/D-Programming-Language/tools/2.064/rdmd.d
-ldmd2 rdmd.d 
+ldmd2 rdmd.d
 cp rdmd /usr/local/bin
-
-# build and install htslib
-cd /tmp
-git clone --recursive https://github.com/samtools/htslib.git
-cd htslib
-make && make install
 
 # remove packages that are no more necessary
 # (remaining ones: llvm gcc git zlib libconfig zlib-devel)
