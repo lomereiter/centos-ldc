@@ -1,4 +1,4 @@
-FROM blalor/centos
+FROM scummos/centos6.8-qt5.7
 
 MAINTAINER Artem Tarasov <lomereiter@gmail.com>
 

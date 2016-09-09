@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # install necessary development tools for building LDC
-yum -y install llvm git wget gcc gcc-c++ patch llvm-devel llvm-static libconfig libconfig-devel zlib zlib-devel cmake28
+yum -y install git wget gcc gcc-c++ patch libconfig libconfig-devel zlib zlib-devel cmake28
 
 # clone LDC repo
 cd /tmp
-git clone --recursive https://github.com/ldc-developers/ldc.git -b release-0.16.1
+git clone --recursive https://github.com/ldc-developers/ldc.git -b release-0.17.1
 
 # patch D runtime so as not to depend on newer glibc
 cd /tmp/ldc/runtime/druntime
@@ -16,6 +16,7 @@ patch -p1 < d-runtime-qsort.patch
 cd /tmp/ldc
 mkdir build
 cd build
+export PATH=/opt/llvm/bin:$PATH
 cmake28 ..
 make && make install
 
@@ -27,6 +28,6 @@ cp rdmd /usr/local/bin
 
 # remove packages that are no more necessary
 # (remaining ones: llvm gcc git zlib libconfig zlib-devel)
-yum -y remove llvm-static llvm-devel llvm gcc-c++ patch libconfig-devel wget
+yum -y remove gcc-c++ patch libconfig-devel wget
 yum clean all
 rm -rf /tmp/*
