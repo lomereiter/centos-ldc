@@ -42,3 +42,10 @@ RUN GCC_VERSION=$(g++ -dumpversion) && \
 ln -s /opt/rh/devtoolset-4/root/usr/include/c++/${GCC_VERSION} /usr/include/c++/${GCC_VERSION} && \
 ln -s /opt/rh/devtoolset-4/root/usr/lib/gcc/x86_64-redhat-linux/${GCC_VERSION} \
 /usr/lib/gcc/x86_64-redhat-linux/${GCC_VERSION}
+
+ADD d-runtime-qsort.patch /tmp/d-runtime-qsort.patch
+RUN chmod 644 /tmp/d-runtime-qsort.patch
+
+ADD install-software.sh /tmp/install-software.sh
+RUN chmod 755 /tmp/install-software.sh
+RUN /tmp/install-software.sh
