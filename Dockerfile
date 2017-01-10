@@ -27,7 +27,7 @@ python --version && \
 cd /llvm/llvm-${LLVM_VERSION}.src && mkdir -p build && cd build && \
 ln -s /usr/bin/cmake3 /usr/local/bin/cmake && \
 cmake .. -DCMAKE_INSTALL_PREFIX=/opt/llvm/ \
--DCMAKE_BUILD_TYPE=Release && make -j8 install && rm -Rf /llvm
+-DCMAKE_BUILD_TYPE=Release && make install && rm -Rf /llvm
 
 ## set env
 ENV CXX=/opt/llvm/bin/clang++ \
