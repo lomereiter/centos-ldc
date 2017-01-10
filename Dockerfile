@@ -15,11 +15,11 @@ yum clean all
 ## Install llvm
 ARG LLVM_VERSION=3.8.0
 RUN mkdir -p /llvm && cd /llvm && \
-wget http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz && \
+wget -q http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz && \
 tar xvf llvm-${LLVM_VERSION}.src.tar.xz && \
 cd llvm-${LLVM_VERSION}.src && \
 cd tools && \
-wget http://llvm.org/releases/${LLVM_VERSION}/cfe-${LLVM_VERSION}.src.tar.xz && \
+wget -q http://llvm.org/releases/${LLVM_VERSION}/cfe-${LLVM_VERSION}.src.tar.xz && \
 tar xvf cfe-${LLVM_VERSION}.src.tar.xz && \
 . /opt/rh/python27/enable && \
 . /opt/rh/devtoolset-4/enable && \
@@ -27,7 +27,8 @@ python --version && \
 cd /llvm/llvm-${LLVM_VERSION}.src && mkdir -p build && cd build && \
 ln -s /usr/bin/cmake3 /usr/local/bin/cmake && \
 cmake .. -DCMAKE_INSTALL_PREFIX=/opt/llvm/ \
--DCMAKE_BUILD_TYPE=Release && make install && rm -Rf /llvm
+-DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_INCLUDE_TESTS="OFF" && \
+make install && rm -Rf /llvm
 
 ## set env
 ENV CXX=/opt/llvm/bin/clang++ \
@@ -38,7 +39,8 @@ LLVM_DIR=/opt/llvm
 ENTRYPOINT ["/usr/bin/scl", "enable", "python27", "devtoolset-4", "git19", "--"]
 CMD ["/usr/bin/scl", "enable", "python27", "devtoolset-4", "git19", "--", "/bin/bash"]
 
-RUN GCC_VERSION=$(g++ -dumpversion) && \
+RUN GCC_VERSION=$(/opt/rh/devtoolset-4/root/usr/bin/g++ -dumpversion) && \
+mkdir -p /usr/include/c++/ && mkdir -p /usr/lib/gcc/x86_64-redhat-linux/ && \
 ln -s /opt/rh/devtoolset-4/root/usr/include/c++/${GCC_VERSION} /usr/include/c++/${GCC_VERSION} && \
 ln -s /opt/rh/devtoolset-4/root/usr/lib/gcc/x86_64-redhat-linux/${GCC_VERSION} \
 /usr/lib/gcc/x86_64-redhat-linux/${GCC_VERSION}

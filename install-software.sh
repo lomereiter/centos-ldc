@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # install necessary development tools for building LDC
-yum -y install git wget gcc gcc-c++ patch libconfig libconfig-devel zlib zlib-devel cmake28
+yum -y install git wget patch libconfig libconfig-devel zlib zlib-devel
 
 # clone LDC repo
 cd /tmp
@@ -17,7 +17,7 @@ cd /tmp/ldc
 mkdir build
 cd build
 export PATH=/opt/llvm/bin:$PATH
-cmake28 ..
+cmake ..
 make && make install
 
 # build and install rdmd
@@ -27,7 +27,7 @@ ldmd2 rdmd.d
 cp rdmd /usr/local/bin
 
 # remove packages that are no more necessary
-# (remaining ones: llvm gcc git zlib libconfig zlib-devel)
-yum -y remove gcc-c++ patch libconfig-devel wget
+# (remaining ones: git zlib libconfig zlib-devel)
+yum -y remove patch libconfig-devel wget
 yum clean all
 rm -rf /tmp/*
