@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# install necessary development tools for building LDC
-yum -y install git wget patch libconfig libconfig-devel zlib zlib-devel
+. /opt/rh/devtoolset-4/enable
+. /opt/rh/git19/enable
 
 # clone LDC repo
 cd /tmp
@@ -16,7 +16,6 @@ patch -p1 < d-runtime-qsort.patch
 cd /tmp/ldc
 mkdir build
 cd build
-export PATH=/opt/llvm/bin:$PATH
 cmake ..
 make && make install
 
@@ -26,8 +25,4 @@ wget -q https://raw.githubusercontent.com/D-Programming-Language/tools/2.064/rdm
 ldmd2 rdmd.d
 cp rdmd /usr/local/bin
 
-# remove packages that are no more necessary
-# (remaining ones: git zlib libconfig zlib-devel)
-yum -y remove patch libconfig-devel wget
-yum clean all
 rm -rf /tmp/*
