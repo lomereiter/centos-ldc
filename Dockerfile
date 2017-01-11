@@ -27,7 +27,7 @@ ln -s /usr/bin/cmake3 /usr/local/bin/cmake && \
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ \
 -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="X86" \
 -DLLVM_INCLUDE_TESTS="OFF" && \
-make -j8 install && rm -Rf /llvm
+make install && rm -Rf /llvm
 
 RUN GCC_VERSION=$(/opt/rh/devtoolset-4/root/usr/bin/g++ -dumpversion) && \
 mkdir -p /usr/include/c++/ && mkdir -p /usr/lib/gcc/x86_64-redhat-linux/ && \
