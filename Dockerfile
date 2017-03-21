@@ -42,4 +42,10 @@ ADD install-software.sh /tmp/install-software.sh
 RUN chmod 755 /tmp/install-software.sh
 RUN /tmp/install-software.sh
 
+ADD install-new-ldc.sh /tmp/install-new-ldc.sh
+RUN chmod 755 /tmp/install-new-ldc.sh
+ADD d-runtime-qsort.patch /tmp/d-runtime-qsort.patch
+RUN chmod 644 /tmp/d-runtime-qsort.patch
+RUN /tmp/install-new-ldc.sh
+
 CMD ["/usr/bin/scl", "enable", "python27", "devtoolset-4", "git19", "--", "/bin/bash"]
